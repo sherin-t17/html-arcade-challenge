@@ -124,7 +124,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_teacher_data: { Args: { _password: string }; Returns: Json }
+      reset_quiz_data: { Args: { _password: string }; Returns: Json }
+      update_teacher_settings: {
+        Args: {
+          _expected_count: number
+          _force_unlock: boolean
+          _password: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
