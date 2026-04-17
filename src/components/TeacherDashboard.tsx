@@ -40,28 +40,23 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
     }
   }, [open]);
 
-  const callFn = async (action: string, payload?: any) => {
-    const { data, error } = await supabase.functions.invoke("teacher-dashboard", {
-      body: { password, action, payload },
-    });
-    if (error) throw error;
-    if ((data as any)?.error) throw new Error((data as any).error);
-    return data as any;
-  };
-
-  const loadData = async () => {
+  const loadData = async (pwd: string = password) => {
     setLoading(true); setError("");
     try {
-      const data = await callFn("load");
-      setSessions(data.sessions);
-      setFeedback(data.feedback);
+      const { data, error } = await (supabase as any).rpc("get_teacher_data", { _password: pwd });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      setSessions(data.sessions ?? []);
+      setFeedback(data.feedback ?? []);
       setSettings(data.settings);
       if (data.settings) {
         setExpectedDraft(data.settings.expected_student_count);
         setForceDraft(data.settings.leaderboard_force_unlocked);
       }
+      return true;
     } catch (e: any) {
       setError(e.message || "Failed to load");
+      return false;
     } finally {
       setLoading(false);
     }
@@ -70,11 +65,22 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
   const handleLogin = async () => {
     setLoading(true); setError("");
     try {
-      await callFn("verify");
+      const { data, error } = await (supabase as any).rpc("get_teacher_data", { _password: password });
+      if (error) throw error;
+      if (data?.error) {
+        setError("Invalid password");
+        return;
+      }
+      setSessions(data.sessions ?? []);
+      setFeedback(data.feedback ?? []);
+      setSettings(data.settings);
+      if (data.settings) {
+        setExpectedDraft(data.settings.expected_student_count);
+        setForceDraft(data.settings.leaderboard_force_unlocked);
+      }
       setAuthed(true);
-      await loadData();
     } catch (e: any) {
-      setError("Invalid password");
+      setError(e.message || "Invalid password");
     } finally {
       setLoading(false);
     }
@@ -83,10 +89,13 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
   const saveSettings = async () => {
     setSavingSettings(true); setError("");
     try {
-      const data = await callFn("update_settings", {
-        expected_student_count: expectedDraft,
-        leaderboard_force_unlocked: forceDraft,
+      const { data, error } = await (supabase as any).rpc("update_teacher_settings", {
+        _password: password,
+        _expected_count: expectedDraft,
+        _force_unlock: forceDraft,
       });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
       setSettings(data.settings);
     } catch (e: any) {
       setError(e.message || "Failed to save");
@@ -99,7 +108,9 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
     if (!confirm("Delete ALL quiz sessions and feedback? This cannot be undone.")) return;
     setLoading(true);
     try {
-      await callFn("reset_quiz");
+      const { data, error } = await (supabase as any).rpc("reset_quiz_data", { _password: password });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
       await loadData();
     } catch (e: any) {
       setError(e.message);
@@ -172,7 +183,7 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
                 </button>
               ))}
               <button
-                onClick={loadData}
+                onClick={() => loadData()}
                 className="ml-auto px-3 py-2 rounded-lg text-xs font-pixel uppercase text-muted-foreground hover:text-foreground"
               >
                 {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "↻ Refresh"}
