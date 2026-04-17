@@ -46,7 +46,7 @@ const Index = () => {
         type="button"
         aria-label="Teacher Main Dashboard"
         onClick={() => setTeacherOpen(true)}
-        className="fixed bottom-3 right-3 z-50 h-10 px-3 rounded-lg border border-secondary/40 bg-background/80 backdrop-blur text-secondary text-[10px] font-pixel uppercase tracking-wider hover:bg-secondary/10 hover:border-secondary inline-flex items-center gap-1.5 shadow-lg"
+        className="fixed bottom-4 right-4 z-50 h-10 px-4 rounded-full border border-secondary/50 bg-background/70 backdrop-blur-md text-secondary text-[11px] font-display font-bold uppercase tracking-widest hover:bg-secondary/20 hover:border-secondary hover:shadow-[0_0_20px_hsl(var(--secondary)/0.5)] inline-flex items-center gap-1.5 shadow-lg transition-all"
       >
         <ShieldCheck className="h-3.5 w-3.5" /> MAIN
       </button>

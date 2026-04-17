@@ -53,45 +53,53 @@ export const ResultsScreen = () => {
 
   return (
     <div className="relative z-10 min-h-dvh flex flex-col items-center justify-start px-4 py-8">
-      <h1 className="font-pixel text-2xl sm:text-3xl text-primary text-glow-cyan animate-flicker mb-6">
-        QUEST COMPLETE!
-      </h1>
+      {/* Floating orbs */}
+      <div className="floating-orb w-72 h-72 bg-secondary/30 -top-20 -left-20" />
+      <div className="floating-orb w-80 h-80 bg-accent/30 bottom-10 -right-20" />
 
-      <div className="arcade-card w-full max-w-md p-6 animate-slide-in-up">
+      <div className="relative z-10 text-center mb-6 animate-bounce-in">
+        <div className="inline-flex items-center gap-2 mb-3 px-4 py-1.5 rounded-full border border-accent/40 bg-accent/10 backdrop-blur text-accent text-xs font-display font-bold uppercase tracking-widest">
+          ✦ Quest Complete
+        </div>
+        <h1 className="font-display font-black text-3xl sm:text-5xl text-gradient animate-flicker">
+          VICTORY!
+        </h1>
+      </div>
+
+      <div className="relative z-10 arcade-card w-full max-w-md p-7 animate-slide-in-up">
         <div className="flex flex-col items-center text-center">
           <Avatar avatarId={avatarId} size={120} glow className="animate-float-slow" />
-          <h2 className="mt-4 text-2xl font-bold">{studentName}</h2>
-          <div className="mt-1 text-sm font-pixel text-accent text-glow-amber">{lastTitle}</div>
+          <h2 className="mt-5 text-2xl font-display font-black text-gradient">{studentName}</h2>
+          <div className="mt-1 text-sm font-display font-bold text-secondary">{lastTitle}</div>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3">
-          <Stat icon={<Trophy className="h-5 w-5" />} label="Score" value={lastScore} color="amber" />
-          <Stat icon={<Target className="h-5 w-5" />} label="Correct" value={`${lastCorrect}/24`} color="cyan" />
-          <Stat icon={<Zap className="h-5 w-5" />} label="Accuracy" value={`${lastAccuracy.toFixed(0)}%`} color="cyan" />
-          <Stat icon={<Flame className="h-5 w-5" />} label="Best Streak" value={lastBestStreak} color="magenta" />
+          <Stat icon={<Trophy className="h-5 w-5" />} label="Score" value={lastScore} color="primary" />
+          <Stat icon={<Target className="h-5 w-5" />} label="Correct" value={`${lastCorrect}/24`} color="accent" />
+          <Stat icon={<Zap className="h-5 w-5" />} label="Accuracy" value={`${lastAccuracy.toFixed(0)}%`} color="accent" />
+          <Stat icon={<Flame className="h-5 w-5" />} label="Best Streak" value={lastBestStreak} color="secondary" />
         </div>
 
-        {/* Leaderboard gate */}
         <div className="mt-6">
           {unlocked ? (
             <button
               type="button"
               onClick={() => { sounds.start(); setScreen("leaderboard"); }}
-              className="w-full h-14 rounded-xl btn-neon animate-pulse-glow"
+              className="w-full h-14 rounded-2xl btn-neon animate-pulse-glow"
             >
               SEE LEADERBOARD
             </button>
           ) : (
-            <div className="rounded-xl border-2 border-dashed border-muted/40 bg-muted/10 p-4 text-center">
-              <div className="inline-flex items-center gap-2 text-muted-foreground text-xs font-pixel mb-2">
-                <Lock className="h-3.5 w-3.5" /> LEADERBOARD LOCKED
+            <div className="rounded-2xl border-2 border-dashed border-secondary/40 bg-secondary/5 backdrop-blur p-5 text-center">
+              <div className="inline-flex items-center gap-2 text-secondary text-xs font-display font-bold mb-2 uppercase tracking-widest">
+                <Lock className="h-3.5 w-3.5" /> Leaderboard Locked
               </div>
-              <div className="text-sm">
-                Waiting for everyone to finish…
+              <div className="text-sm font-medium">
+                Waiting for everyone to finish...
               </div>
-              <div className="mt-2 inline-flex items-center gap-2 text-xs">
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
-                <span><span className="text-primary font-bold">{submittedCount}</span> / {expectedCount} done · <span className="text-secondary">{remaining}</span> left</span>
+              <div className="mt-3 inline-flex items-center gap-2 text-sm">
+                <Loader2 className="h-4 w-4 animate-spin text-accent" />
+                <span><span className="text-accent font-bold font-display">{submittedCount}</span> / {expectedCount} done · <span className="text-secondary font-bold font-display">{remaining}</span> left</span>
               </div>
             </div>
           )}
@@ -99,7 +107,7 @@ export const ResultsScreen = () => {
           <button
             type="button"
             onClick={() => setScreen("feedback")}
-            className="mt-3 w-full h-11 rounded-xl border-2 border-secondary/50 text-secondary font-pixel text-xs uppercase tracking-wider hover:bg-secondary/10 hover:border-secondary transition-all"
+            className="mt-3 w-full h-12 rounded-2xl btn-ghost-neon text-xs"
           >
             ✦ Give Feedback
           </button>
@@ -109,18 +117,18 @@ export const ResultsScreen = () => {
   );
 };
 
-const Stat = ({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: React.ReactNode; color: "cyan" | "magenta" | "amber" }) => {
+const Stat = ({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: React.ReactNode; color: "accent" | "secondary" | "primary" }) => {
   const colorMap = {
-    cyan: "text-primary border-primary/30",
-    magenta: "text-secondary border-secondary/30",
-    amber: "text-accent border-accent/30",
+    accent: "text-accent border-accent/30 bg-accent/5",
+    secondary: "text-secondary border-secondary/30 bg-secondary/5",
+    primary: "text-primary border-primary/30 bg-primary/5",
   };
   return (
-    <div className={`rounded-lg border bg-background/40 p-3 ${colorMap[color]}`}>
-      <div className="flex items-center gap-2 text-xs font-pixel uppercase tracking-wider opacity-80">
+    <div className={`rounded-2xl border backdrop-blur p-4 ${colorMap[color]}`}>
+      <div className="flex items-center gap-2 text-[10px] font-display font-bold uppercase tracking-widest opacity-90">
         {icon} {label}
       </div>
-      <div className="mt-1 text-xl font-bold">{value}</div>
+      <div className="mt-1 text-2xl font-display font-black">{value}</div>
     </div>
   );
 };

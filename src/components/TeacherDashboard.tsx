@@ -126,23 +126,21 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
     : 0;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-md flex items-center justify-center p-3 animate-slide-in-up">
+    <div className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex items-center justify-center p-3 animate-slide-in-up">
       <div className="arcade-card w-full max-w-3xl max-h-[90dvh] flex flex-col overflow-hidden">
-        {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-primary/20">
-          <h2 className="font-pixel text-sm sm:text-base text-secondary text-glow-magenta">
+          <h2 className="font-display font-black text-base sm:text-lg text-gradient-pink">
             ✦ TEACHER DASHBOARD
           </h2>
-          <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground">
+          <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground transition-colors">
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Body */}
         {!authed ? (
           <div className="p-6 sm:p-10 text-center">
-            <Lock className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="font-pixel text-sm text-primary text-glow-cyan mb-1">PASSWORD REQUIRED</h3>
+            <Lock className="h-14 w-14 text-primary mx-auto mb-4 animate-glow-pulse" />
+            <h3 className="font-display font-black text-lg text-gradient mb-1 uppercase tracking-widest">PASSWORD REQUIRED</h3>
             <p className="text-xs text-muted-foreground mb-5">Enter the teacher password to continue</p>
             <input
               type="password"

@@ -12,8 +12,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        pixel: ['"Press Start 2P"', "monospace"],
-        body: ['Nunito', "system-ui", "sans-serif"],
+        display: ['Orbitron', '"Space Grotesk"', "sans-serif"],
+        pixel: ['"Space Grotesk"', "sans-serif"],
+        body: ['Outfit', "system-ui", "sans-serif"],
         mono: ['"JetBrains Mono"', "monospace"],
       },
       colors: {
@@ -70,8 +71,8 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 8px)",
       },
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },

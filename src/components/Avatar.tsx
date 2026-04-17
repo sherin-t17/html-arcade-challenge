@@ -16,11 +16,11 @@ export const Avatar = ({ avatarId, size = 64, className, glow = false, selected 
       aria-label={AVATAR_NAMES[avatarId] ?? `Avatar ${avatarId}`}
       style={{ ...getAvatarStyle(avatarId), width: size, height: size }}
       className={cn(
-        "rounded-lg border-2 transition-all",
+        "rounded-2xl border-2 transition-all duration-300",
         selected
-          ? "border-primary shadow-[0_0_20px_hsl(var(--primary)/0.7),inset_0_0_12px_hsl(var(--primary)/0.4)] scale-105"
-          : "border-primary/20",
-        glow && "shadow-[0_0_30px_hsl(var(--secondary)/0.6)] border-secondary/60",
+          ? "border-secondary shadow-[0_0_25px_hsl(var(--secondary)/0.8),inset_0_0_15px_hsl(var(--secondary)/0.3)] scale-110 ring-2 ring-secondary/40 ring-offset-2 ring-offset-background"
+          : "border-primary/30 hover:border-primary/70 hover:scale-105",
+        glow && "shadow-[0_0_40px_hsl(var(--secondary)/0.7)] border-secondary/70",
         className,
       )}
     />

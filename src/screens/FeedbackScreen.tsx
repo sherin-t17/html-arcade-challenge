@@ -76,11 +76,12 @@ export const FeedbackScreen = () => {
   if (done) {
     return (
       <div className="relative z-10 min-h-dvh flex items-center justify-center px-4">
-        <div className="arcade-card max-w-md w-full p-8 text-center animate-slide-in-up">
-          <CheckCircle2 className="h-16 w-16 text-success mx-auto mb-4" />
-          <h2 className="font-pixel text-xl text-primary text-glow-cyan mb-2">THANKS!</h2>
-          <p className="text-sm text-muted-foreground mb-6">Your feedback helps make HTML Arcade even better.</p>
-          <button onClick={() => setScreen("results")} className="w-full h-12 rounded-xl btn-neon">
+        <div className="floating-orb w-72 h-72 bg-success/30 top-1/4 left-1/4" />
+        <div className="arcade-card max-w-md w-full p-8 text-center animate-bounce-in relative z-10">
+          <CheckCircle2 className="h-20 w-20 text-success mx-auto mb-4 animate-glow-pulse" />
+          <h2 className="font-display font-black text-2xl text-gradient mb-2">THANK YOU!</h2>
+          <p className="text-sm text-muted-foreground mb-6">Your feedback helps make HTML Arcade legendary.</p>
+          <button onClick={() => setScreen("results")} className="w-full h-13 py-3 rounded-2xl btn-neon">
             BACK TO RESULTS
           </button>
         </div>
@@ -90,29 +91,29 @@ export const FeedbackScreen = () => {
 
   return (
     <div className="relative z-10 min-h-dvh px-4 py-6 sm:py-10 flex flex-col">
-      <div className="max-w-xl w-full mx-auto flex-1 flex flex-col">
-        {/* Header */}
+      <div className="floating-orb w-72 h-72 bg-secondary/25 top-10 -right-10" />
+      <div className="floating-orb w-64 h-64 bg-primary/25 bottom-10 -left-10" />
+
+      <div className="max-w-xl w-full mx-auto flex-1 flex flex-col relative z-10">
         <div className="flex items-center justify-between mb-4">
-          <button onClick={back} className="inline-flex items-center gap-1 text-xs font-pixel text-primary hover:text-primary-glow">
+          <button onClick={back} className="inline-flex items-center gap-1 text-xs font-display font-bold text-accent hover:text-accent-glow uppercase tracking-widest">
             <ChevronLeft className="h-4 w-4" /> Back
           </button>
-          <span className="font-pixel text-xs text-muted-foreground">{step + 1} / {STEPS.length}</span>
+          <span className="font-display font-bold text-xs text-muted-foreground">{step + 1} / {STEPS.length}</span>
           <div className="w-12" />
         </div>
 
-        {/* Progress bar */}
-        <div className="h-2 rounded-full bg-muted/30 overflow-hidden mb-6">
+        <div className="h-2.5 rounded-full bg-muted/30 overflow-hidden mb-6 backdrop-blur">
           <div
             className="h-full rounded-full transition-all duration-500"
-            style={{ width: `${progress}%`, background: "var(--gradient-arcade)", boxShadow: "0 0 20px hsl(var(--primary) / 0.6)" }}
+            style={{ width: `${progress}%`, background: "var(--gradient-arcade)", boxShadow: "0 0 20px hsl(var(--primary) / 0.7)" }}
           />
         </div>
 
-        {/* Title */}
-        <h1 className="font-pixel text-base sm:text-lg text-primary text-glow-cyan mb-1 leading-tight">
+        <h1 className="font-display font-black text-base sm:text-lg text-gradient mb-2 leading-tight uppercase tracking-widest">
           ✦ FEEDBACK ✦
         </h1>
-        <p className="text-lg sm:text-xl font-bold mb-6">{current.title}</p>
+        <p className="text-xl sm:text-2xl font-display font-bold mb-6">{current.title}</p>
 
         {/* Body */}
         <div className="flex-1">
