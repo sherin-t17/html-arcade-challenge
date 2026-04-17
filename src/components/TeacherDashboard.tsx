@@ -183,7 +183,7 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
                 </button>
               ))}
               <button
-                onClick={loadData}
+                onClick={() => loadData()}
                 className="ml-auto px-3 py-2 rounded-lg text-xs font-pixel uppercase text-muted-foreground hover:text-foreground"
               >
                 {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "↻ Refresh"}
