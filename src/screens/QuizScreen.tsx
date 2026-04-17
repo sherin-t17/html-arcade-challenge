@@ -5,7 +5,7 @@ import { hashString, mulberry32, seededShuffle } from "@/lib/seeded-random";
 import { sounds } from "@/lib/sounds";
 import { SoundToggle } from "@/components/SoundToggle";
 import { supabase } from "@/integrations/supabase/client";
-import { Flame, Trophy, ChevronRight } from "lucide-react";
+import { Flame, Trophy, ChevronRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const QUESTION_SECONDS = 20;
@@ -62,7 +62,6 @@ export const QuizScreen = () => {
 
   const q = questions[qIndex];
 
-  // Timer
   useEffect(() => {
     if (revealed) return;
     if (secondsLeft <= 0) {
@@ -79,7 +78,6 @@ export const QuizScreen = () => {
     return () => window.clearTimeout(id);
   }, [secondsLeft, revealed]);
 
-  // Reset per question
   useEffect(() => {
     setSecondsLeft(QUESTION_SECONDS);
     setPicked(null);
@@ -113,14 +111,12 @@ export const QuizScreen = () => {
         setBestStreak((b) => Math.max(b, newStreak));
         setCorrectCount((c) => c + 1);
         sounds.correct();
-        // auto-advance fast on correct
-        advanceTimerRef.current = window.setTimeout(() => goNext(), 700);
+        advanceTimerRef.current = window.setTimeout(() => goNext(), 800);
       } else {
         setStreak(0);
         sounds.wrong();
         setShowNext(true);
-        // auto-advance after 2s also
-        advanceTimerRef.current = window.setTimeout(() => goNext(), 2200);
+        advanceTimerRef.current = window.setTimeout(() => goNext(), 2400);
       }
     },
     [q, streak, revealed],
@@ -167,7 +163,6 @@ export const QuizScreen = () => {
         bestStreak, totalTimeMs: totalMs, title,
       });
     } catch (e) {
-      // still proceed to results even if save fails
       setLastSession({
         id: "local-" + Date.now(), score, correct: correctCount, accuracy,
         bestStreak, totalTimeMs: totalMs, title,
@@ -176,46 +171,56 @@ export const QuizScreen = () => {
     setScreen("results");
   }, [submitting, correctCount, questions.length, score, bestStreak, studentName, avatarId, setLastSession, setScreen]);
 
-  // Countdown ring math
   const ringPct = (secondsLeft / QUESTION_SECONDS) * 100;
   const danger = secondsLeft <= 5;
-  const ringColor = danger ? "hsl(var(--destructive))" : "hsl(var(--primary))";
+  const ringColor = danger ? "hsl(var(--destructive))" : "hsl(var(--accent))";
 
   return (
-    <div className="relative z-10 min-h-dvh flex flex-col px-3 py-3 sm:px-6 sm:py-5">
+    <div className="relative z-10 min-h-dvh flex flex-col px-3 py-4 sm:px-6 sm:py-6">
+      {/* Floating orbs */}
+      <div className="floating-orb w-64 h-64 bg-primary/30 -top-20 -right-20" />
+      <div className="floating-orb w-72 h-72 bg-secondary/20 bottom-0 -left-20" />
+
       {/* Top bar */}
-      <div className="flex items-center justify-between gap-2 mb-3 sm:mb-5">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg arcade-card text-xs font-pixel">
-          <span className="text-primary">Q</span>
+      <div className="relative z-10 flex items-center justify-between gap-2 mb-4 sm:mb-6">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-full arcade-card text-xs font-display font-bold">
+          <span className="text-accent">Q</span>
           <span>{qIndex + 1}<span className="text-muted-foreground">/{questions.length}</span></span>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg arcade-card text-xs font-pixel">
-          <Trophy className="h-3.5 w-3.5 text-accent" />
-          <span className="text-accent text-glow-amber">{score}</span>
+        <div className="flex items-center gap-1.5 px-3 py-2 rounded-full arcade-card text-xs font-display font-bold">
+          <Trophy className="h-3.5 w-3.5 text-primary" />
+          <span className="text-primary">{score}</span>
         </div>
-        <div className={cn("flex items-center gap-1.5 px-3 py-1.5 rounded-lg arcade-card text-xs font-pixel transition-all",
-          streak >= 3 && "border-secondary/60 shadow-[0_0_20px_hsl(var(--secondary)/0.4)]"
+        <div className={cn("flex items-center gap-1.5 px-3 py-2 rounded-full arcade-card text-xs font-display font-bold transition-all",
+          streak >= 3 && "border-secondary/70 shadow-[0_0_25px_hsl(var(--secondary)/0.5)]"
         )}>
-          <Flame className={cn("h-3.5 w-3.5", streak >= 3 ? "text-secondary" : "text-muted-foreground")} />
-          <span className={streak >= 3 ? "text-secondary text-glow-magenta" : "text-muted-foreground"}>×{streak}</span>
+          <Flame className={cn("h-3.5 w-3.5", streak >= 3 ? "text-secondary animate-glow-pulse" : "text-muted-foreground")} />
+          <span className={streak >= 3 ? "text-secondary" : "text-muted-foreground"}>×{streak}</span>
         </div>
         <SoundToggle />
       </div>
 
       {/* Countdown ring */}
-      <div className="flex justify-center mb-3 sm:mb-5">
-        <div className="relative h-20 w-20 sm:h-24 sm:w-24">
+      <div className="relative z-10 flex justify-center mb-4 sm:mb-6">
+        <div className="relative h-24 w-24 sm:h-28 sm:w-28">
           <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="hsl(var(--accent))" />
+                <stop offset="100%" stopColor="hsl(var(--secondary))" />
+              </linearGradient>
+            </defs>
             <circle cx="50" cy="50" r="44" stroke="hsl(var(--muted))" strokeWidth="6" fill="none" opacity="0.3" />
             <circle
               cx="50" cy="50" r="44" fill="none" strokeLinecap="round"
-              stroke={ringColor} strokeWidth="6"
+              stroke={danger ? ringColor : "url(#ringGrad)"}
+              strokeWidth="6"
               strokeDasharray={`${(ringPct / 100) * 276.46} 276.46`}
-              style={{ transition: "stroke-dasharray 1s linear, stroke 0.2s" }}
+              style={{ transition: "stroke-dasharray 1s linear, stroke 0.2s", filter: "drop-shadow(0 0 8px currentColor)" }}
             />
           </svg>
-          <div className={cn("absolute inset-0 flex items-center justify-center font-pixel text-2xl sm:text-3xl",
-            danger ? "text-destructive animate-pulse" : "text-primary text-glow-cyan"
+          <div className={cn("absolute inset-0 flex items-center justify-center font-display font-black text-3xl sm:text-4xl",
+            danger ? "text-destructive animate-pulse" : "text-accent text-glow-cyan"
           )}>
             {secondsLeft}
           </div>
@@ -223,25 +228,24 @@ export const QuizScreen = () => {
       </div>
 
       {/* Question card */}
-      <div key={animKey} className="arcade-card p-4 sm:p-6 mx-auto w-full max-w-2xl animate-slide-in-right">
+      <div key={animKey} className="relative z-10 arcade-card p-5 sm:p-7 mx-auto w-full max-w-2xl animate-slide-in-right">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-[10px] font-pixel text-secondary uppercase tracking-wider">
-            Lvl {q.level} · {q.levelName}
+          <span className="text-[10px] font-display font-bold text-secondary uppercase tracking-widest inline-flex items-center gap-1.5">
+            <Sparkles className="h-3 w-3" /> Lvl {q.level} · {q.levelName}
           </span>
         </div>
-        <h2 className="text-base sm:text-xl font-bold leading-snug">{q.question}</h2>
+        <h2 className="text-lg sm:text-2xl font-bold leading-snug font-display">{q.question}</h2>
         {q.code && (
-          <pre className="mt-3 p-3 rounded-lg bg-background/80 border border-primary/20 font-mono text-xs sm:text-sm overflow-x-auto text-primary/90 whitespace-pre-wrap break-words">
+          <pre className="mt-4 p-4 rounded-xl bg-background/80 border border-accent/30 font-mono text-xs sm:text-sm overflow-x-auto text-accent whitespace-pre-wrap break-words shadow-inner">
             <code>{q.code}</code>
           </pre>
         )}
 
-        {/* Options */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           {q.shuffledOptions.map((opt, i) => {
             const isCorrect = i === q.shuffledCorrectIdx;
             const isPicked = i === picked;
-            let stateClass = "border-primary/30 hover:border-primary hover:bg-primary/10";
+            let stateClass = "border-primary/30 hover:border-primary hover:bg-primary/10 hover:scale-[1.02] hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]";
             if (revealed) {
               if (isCorrect) stateClass = "border-success bg-success/20 text-success-foreground animate-flash-green";
               else if (isPicked) stateClass = "border-destructive bg-destructive/20 animate-flash-red";
@@ -254,37 +258,35 @@ export const QuizScreen = () => {
                 disabled={revealed}
                 onClick={() => handleAnswer(i)}
                 className={cn(
-                  "text-left p-3 sm:p-4 rounded-xl border-2 bg-card/50 transition-all flex items-start gap-3 min-h-[60px]",
+                  "text-left p-3.5 sm:p-4 rounded-2xl border-2 bg-card/40 backdrop-blur transition-all duration-300 flex items-start gap-3 min-h-[64px]",
                   stateClass,
                 )}
               >
                 <span className={cn(
-                  "shrink-0 h-7 w-7 rounded-md font-pixel text-xs flex items-center justify-center border",
+                  "shrink-0 h-8 w-8 rounded-xl font-display font-black text-sm flex items-center justify-center border-2",
                   revealed && isCorrect ? "bg-success text-success-foreground border-success"
                     : revealed && isPicked ? "bg-destructive text-destructive-foreground border-destructive"
-                    : "bg-primary/15 text-primary border-primary/40",
+                    : "bg-primary/20 text-primary border-primary/50",
                 )}>
                   {LETTERS[i]}
                 </span>
-                <span className="text-sm sm:text-base leading-snug font-medium">{opt}</span>
+                <span className="text-sm sm:text-base leading-snug font-medium pt-0.5">{opt}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Explanation */}
         {revealed && picked !== q.shuffledCorrectIdx && (
-          <div className="mt-3 p-3 rounded-lg bg-accent/10 border border-accent/40 text-xs sm:text-sm text-accent-glow animate-slide-in-up">
-            💡 {q.explanation}
+          <div className="mt-4 p-4 rounded-xl bg-accent/10 border border-accent/40 text-sm text-foreground/90 animate-slide-in-up backdrop-blur">
+            <span className="text-accent font-bold">💡 </span>{q.explanation}
           </div>
         )}
 
-        {/* Next button */}
         {showNext && (
           <button
             type="button"
             onClick={goNext}
-            className="mt-4 w-full h-12 rounded-xl btn-neon inline-flex items-center justify-center gap-2 text-sm"
+            className="mt-4 w-full h-13 py-3 rounded-2xl btn-neon inline-flex items-center justify-center gap-2 text-sm"
           >
             NEXT <ChevronRight className="h-5 w-5" />
           </button>
