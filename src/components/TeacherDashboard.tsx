@@ -8,7 +8,7 @@ type Props = { open: boolean; onClose: () => void };
 
 type Session = {
   id: string; student_name: string; avatar_id: number;
-  score: number; correct_count: number; accuracy: number;
+  score: number; correct_count: number; total_questions: number; accuracy: number;
   best_streak: number; total_time_ms: number; title: string; created_at: string;
 };
 type Feedback = {
@@ -209,7 +209,7 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
                       <Avatar avatarId={s.avatar_id} size={36} />
                       <div className="flex-1 min-w-0">
                         <div className="font-bold text-sm truncate">{s.student_name}</div>
-                        <div className="text-[11px] text-muted-foreground">{s.correct_count}/24 · {s.accuracy.toFixed(0)}% · 🔥 {s.best_streak}</div>
+                        <div className="text-[11px] text-muted-foreground">{s.correct_count}/{s.total_questions || 24} · {s.accuracy.toFixed(0)}% · 🔥 {s.best_streak}</div>
                       </div>
                       <div className="font-pixel text-sm text-accent">{s.score}</div>
                     </div>

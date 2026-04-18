@@ -13,6 +13,7 @@ type Row = {
   avatar_id: number;
   score: number;
   correct_count: number;
+  total_questions: number;
   accuracy: number;
   total_time_ms: number;
 };
@@ -27,7 +28,7 @@ export const LeaderboardScreen = () => {
     const fetchRows = async () => {
       const { data } = await supabase
         .from("quiz_sessions")
-        .select("id, student_name, avatar_id, score, correct_count, accuracy, total_time_ms")
+        .select("id, student_name, avatar_id, score, correct_count, total_questions, accuracy, total_time_ms")
         .order("score", { ascending: false })
         .order("accuracy", { ascending: false })
         .order("total_time_ms", { ascending: true })
@@ -186,7 +187,7 @@ const PodiumSlot = ({ row, place, delay, highlight }: { row?: Row; place: 1 | 2 
         </div>
         <div className="mt-2 text-center text-xs font-bold truncate max-w-[120px]">{row.student_name}</div>
         <div className={cn("text-center font-display font-black text-lg mt-0.5", cfg.color)}>{row.score}</div>
-        <div className="text-center text-[10px] text-muted-foreground">{row.correct_count}/24 · {row.accuracy.toFixed(0)}%</div>
+        <div className="text-center text-[10px] text-muted-foreground">{row.correct_count}/{row.total_questions || 24} · {row.accuracy.toFixed(0)}%</div>
       </div>
       <div
         className={cn(
@@ -235,7 +236,7 @@ const RowItem = ({ row, rank, highlight, delay, maxScore }: { row: Row; rank: nu
           {row.student_name}
           {isHot && <Flame className="h-3 w-3 text-secondary animate-flicker" />}
         </div>
-        <div className="text-[11px] text-muted-foreground">{row.correct_count}/24 · {row.accuracy.toFixed(0)}%</div>
+        <div className="text-[11px] text-muted-foreground">{row.correct_count}/{row.total_questions || 24} · {row.accuracy.toFixed(0)}%</div>
       </div>
       <div className="font-display font-black text-lg text-gradient-pink relative z-10">{row.score}</div>
     </div>
