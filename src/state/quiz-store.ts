@@ -8,6 +8,7 @@ type State = {
   avatarId: number;
   screen: Screen;
   soundOn: boolean;
+  replayCount: number;
   // Last completed session info for results/leaderboard highlight
   lastSessionId: string | null;
   lastScore: number;
@@ -24,6 +25,7 @@ type State = {
   setLastSession: (data: {
     id: string; score: number; correct: number; accuracy: number; bestStreak: number; totalTimeMs: number; title: string;
   }) => void;
+  replayQuiz: () => void;
   reset: () => void;
 };
 
@@ -34,6 +36,7 @@ export const useQuiz = create<State>()(
       avatarId: -1,
       screen: "welcome",
       soundOn: true,
+      replayCount: 0,
       lastSessionId: null,
       lastScore: 0,
       lastCorrect: 0,
@@ -55,8 +58,14 @@ export const useQuiz = create<State>()(
         lastTotalTimeMs: d.totalTimeMs,
         lastTitle: d.title,
       }),
+      replayQuiz: () => set((s) => ({
+        replayCount: s.replayCount + 1,
+        screen: "quiz",
+        lastSessionId: null,
+        lastScore: 0, lastCorrect: 0, lastAccuracy: 0, lastBestStreak: 0, lastTotalTimeMs: 0, lastTitle: "",
+      })),
       reset: () => set({
-        studentName: "", avatarId: -1, screen: "welcome",
+        studentName: "", avatarId: -1, screen: "welcome", replayCount: 0,
         lastSessionId: null, lastScore: 0, lastCorrect: 0, lastAccuracy: 0, lastBestStreak: 0, lastTotalTimeMs: 0, lastTitle: "",
       }),
     }),

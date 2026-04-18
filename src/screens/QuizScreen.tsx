@@ -13,8 +13,9 @@ const LETTERS = ["A", "B", "C", "D"];
 
 type ShuffledQ = Question & { shuffledOptions: string[]; shuffledCorrectIdx: number };
 
-function buildPersonalQuestions(name: string): ShuffledQ[] {
-  const seed = hashString(name.toLowerCase().trim() || "anon");
+function buildPersonalQuestions(name: string, replay: number): ShuffledQ[] {
+  const seedKey = `${name.toLowerCase().trim() || "anon"}::r${replay}`;
+  const seed = hashString(seedKey);
   const rng = mulberry32(seed);
   const order = seededShuffle(QUESTIONS, rng);
   return order.map((q) => {
@@ -40,8 +41,8 @@ function rankTitle(pct: number): string {
 }
 
 export const QuizScreen = () => {
-  const { studentName, avatarId, setScreen, setLastSession } = useQuiz();
-  const questions = useMemo(() => buildPersonalQuestions(studentName), [studentName]);
+  const { studentName, avatarId, setScreen, setLastSession, replayCount } = useQuiz();
+  const questions = useMemo(() => buildPersonalQuestions(studentName, replayCount), [studentName, replayCount]);
 
   const [qIndex, setQIndex] = useState(0);
   const [score, setScore] = useState(0);
