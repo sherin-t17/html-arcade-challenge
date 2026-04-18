@@ -44,7 +44,7 @@ const Index = () => {
       {/* Teacher MAIN button (bottom-left, animated) */}
       <button
         type="button"
-        aria-label="Teacher Main Dashboard"
+        aria-label="Admin Dashboard"
         onClick={() => setTeacherOpen(true)}
         className="fixed bottom-4 left-4 z-50 h-10 px-4 rounded-full border border-secondary/60 bg-background/70 backdrop-blur-md text-secondary text-[11px] font-display font-bold uppercase tracking-widest hover:bg-secondary/20 hover:border-secondary hover:shadow-[0_0_25px_hsl(var(--secondary)/0.7)] inline-flex items-center gap-1.5 shadow-lg transition-all animate-pulse-glow hover:scale-110"
       >
