@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useQuiz } from "@/state/quiz-store";
 import { Avatar } from "@/components/Avatar";
 import { supabase } from "@/integrations/supabase/client";
-import { Trophy, Target, Flame, Zap, Lock, Loader2 } from "lucide-react";
+import { Trophy, Target, Flame, Zap, Lock, Loader2, RotateCcw } from "lucide-react";
 import { sounds } from "@/lib/sounds";
 
 export const ResultsScreen = () => {
   const {
-    studentName, avatarId, lastScore, lastCorrect, lastAccuracy, lastBestStreak, lastTitle, setScreen,
+    studentName, avatarId, lastScore, lastCorrect, lastAccuracy, lastBestStreak, lastTitle, setScreen, replayQuiz,
   } = useQuiz();
 
   const [submittedCount, setSubmittedCount] = useState(0);
@@ -104,13 +104,22 @@ export const ResultsScreen = () => {
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={() => setScreen("feedback")}
-            className="mt-3 w-full h-12 rounded-2xl btn-ghost-neon text-xs"
-          >
-            ✦ Give Feedback
-          </button>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => { sounds.start(); replayQuiz(); }}
+              className="h-12 rounded-2xl btn-ghost-neon text-xs inline-flex items-center justify-center gap-1.5"
+            >
+              <RotateCcw className="h-3.5 w-3.5" /> Replay
+            </button>
+            <button
+              type="button"
+              onClick={() => setScreen("feedback")}
+              className="h-12 rounded-2xl btn-ghost-neon text-xs"
+            >
+              ✦ Feedback
+            </button>
+          </div>
         </div>
       </div>
     </div>

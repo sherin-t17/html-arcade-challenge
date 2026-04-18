@@ -28,17 +28,30 @@ export const AVATAR_NAMES = [
   "Bubbles", "Blaze", "Magi",
 ];
 
+// Inset crop (in %) inside each cell to avoid neighbor bleed.
+const INSET = 8; // crop 8% off each side of the cell
+
 export function getAvatarStyle(avatarId: number): React.CSSProperties {
   const cellIndex = SELECTED_CELLS[avatarId % AVATAR_COUNT] ?? 0;
   const col = cellIndex % SHEET_COLS;
   const row = Math.floor(cellIndex / SHEET_COLS);
+
+  // Effective scale: each cell occupies (100 - 2*INSET)% of the avatar box.
+  // Background must be enlarged so that cropped portion fits the box.
+  const cropFraction = (100 - 2 * INSET) / 100; // e.g. 0.84
+  const bgWidthPct = (SHEET_COLS * 100) / cropFraction;
+  const bgHeightPct = (SHEET_ROWS * 100) / cropFraction;
+
+  // Position so the *inset center* of the cell aligns with the box.
   const xPct = (col / (SHEET_COLS - 1)) * 100;
   const yPct = (row / (SHEET_ROWS - 1)) * 100;
+
   return {
     backgroundImage: `url(${spriteUrl})`,
-    backgroundSize: `${SHEET_COLS * 100}% ${SHEET_ROWS * 100}%`,
+    backgroundSize: `${bgWidthPct}% ${bgHeightPct}%`,
     backgroundPosition: `${xPct}% ${yPct}%`,
     backgroundRepeat: "no-repeat",
     imageRendering: "auto",
+    overflow: "hidden",
   };
 }

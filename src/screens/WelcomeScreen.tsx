@@ -33,7 +33,7 @@ export const WelcomeScreen = () => {
       {/* Title */}
       <div className="text-center mt-6 sm:mt-10 mb-6 sm:mb-8 relative z-10">
         <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-secondary/40 bg-secondary/10 backdrop-blur text-secondary text-xs font-display font-bold uppercase tracking-widest animate-bounce-in">
-          <Sparkles className="h-3.5 w-3.5" /> Anime Quiz Battle
+          <Sparkles className="h-3.5 w-3.5" /> Quiz Battle Arena
         </div>
         <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl leading-none tracking-tight">
           <span className="block text-gradient animate-gradient-shift" style={{ backgroundImage: "linear-gradient(135deg, hsl(190 100% 70%), hsl(275 100% 75%), hsl(325 100% 75%))" }}>
