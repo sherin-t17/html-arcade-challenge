@@ -9,15 +9,17 @@ import { Flame, Trophy, ChevronRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const QUESTION_SECONDS = 20;
+const QUESTIONS_PER_SESSION = 24; // pick 24 out of the larger pool for variety
 const LETTERS = ["A", "B", "C", "D"];
 
 type ShuffledQ = Question & { shuffledOptions: string[]; shuffledCorrectIdx: number };
 
-function buildPersonalQuestions(name: string, replay: number): ShuffledQ[] {
-  const seedKey = `${name.toLowerCase().trim() || "anon"}::r${replay}`;
+function buildPersonalQuestions(name: string, replay: number, salt: string): ShuffledQ[] {
+  // Salt makes every quiz attempt unique even for the same student name.
+  const seedKey = `${name.toLowerCase().trim() || "anon"}::r${replay}::${salt}`;
   const seed = hashString(seedKey);
   const rng = mulberry32(seed);
-  const order = seededShuffle(QUESTIONS, rng);
+  const order = seededShuffle(QUESTIONS, rng).slice(0, QUESTIONS_PER_SESSION);
   return order.map((q) => {
     const idxs = seededShuffle([0, 1, 2, 3], rng);
     const shuffledOptions = idxs.map((i) => q.options[i]);
@@ -42,7 +44,15 @@ function rankTitle(pct: number): string {
 
 export const QuizScreen = () => {
   const { studentName, avatarId, setScreen, setLastSession, replayCount } = useQuiz();
-  const questions = useMemo(() => buildPersonalQuestions(studentName, replayCount), [studentName, replayCount]);
+  // Per-mount random salt → each attempt is unique, even with same name.
+  const sessionSalt = useMemo(
+    () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`,
+    [replayCount],
+  );
+  const questions = useMemo(
+    () => buildPersonalQuestions(studentName, replayCount, sessionSalt),
+    [studentName, replayCount, sessionSalt],
+  );
 
   const [qIndex, setQIndex] = useState(0);
   const [score, setScore] = useState(0);
