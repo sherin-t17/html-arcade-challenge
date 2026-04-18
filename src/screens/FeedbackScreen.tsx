@@ -17,12 +17,12 @@ type FormState = {
 
 const STEPS = [
   { key: "rating", title: "How was your overall experience?" },
-  { key: "difficulty", title: "How would you rate the difficulty of the quiz?", options: ["Too Easy", "Easy", "Just Right", "Hard", "Too Hard"] },
-  { key: "helpful", title: "Did this quiz help you understand HTML/CSS basics better?", options: ["Yes, a lot", "Somewhat", "Not really"] },
-  { key: "design", title: "How did you like the design and animations?", options: ["Very cool", "Good", "Average", "Needs improvement"] },
-  { key: "liked_most", title: "What did you like the most?", options: ["Design/UI", "Quiz questions", "Animations/Effects", "Leaderboard", "Everything"] },
-  { key: "problems", title: "Did you face any problems?", options: ["No issues", "Slight lag", "Confusing questions", "UI problems"] },
-  { key: "suggestions", title: "Any suggestions or improvements?" },
+  { key: "difficulty", title: "How would you rate the difficulty?", options: ["Too Easy", "Just Right", "Hard", "Too Hard"] },
+  { key: "helpful", title: "Did this quiz help you learn HTML better?", options: ["Yes, a lot", "Somewhat", "Not really"] },
+  { key: "design", title: "How did you like the design & animations?", options: ["Loved it", "Good", "Average", "Needs work"] },
+  { key: "liked_most", title: "What did you enjoy most?", options: ["Quiz questions", "Design / UI", "Leaderboard", "Avatars", "Everything"] },
+  { key: "problems", title: "Did you face any problems?", options: ["No issues", "Confusing questions", "UI / display issues", "Slow / laggy"] },
+  { key: "suggestions", title: "Anything we should add or improve? (optional)" },
 ] as const;
 
 export const FeedbackScreen = () => {

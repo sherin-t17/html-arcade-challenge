@@ -8,7 +8,7 @@ type Props = { open: boolean; onClose: () => void };
 
 type Session = {
   id: string; student_name: string; avatar_id: number;
-  score: number; correct_count: number; accuracy: number;
+  score: number; correct_count: number; total_questions: number; accuracy: number;
   best_streak: number; total_time_ms: number; title: string; created_at: string;
 };
 type Feedback = {
@@ -130,7 +130,7 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
       <div className="arcade-card w-full max-w-3xl max-h-[90dvh] flex flex-col overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-primary/20">
           <h2 className="font-display font-black text-base sm:text-lg text-gradient-pink">
-            ✦ TEACHER DASHBOARD
+            ✦ ADMIN DASHBOARD
           </h2>
           <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground transition-colors">
             <X className="h-5 w-5" />
@@ -140,8 +140,8 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
         {!authed ? (
           <div className="p-6 sm:p-10 text-center">
             <Lock className="h-14 w-14 text-primary mx-auto mb-4 animate-glow-pulse" />
-            <h3 className="font-display font-black text-lg text-gradient mb-1 uppercase tracking-widest">PASSWORD REQUIRED</h3>
-            <p className="text-xs text-muted-foreground mb-5">Enter the teacher password to continue</p>
+            <h3 className="font-display font-black text-lg text-gradient mb-1 uppercase tracking-widest">ADMIN ACCESS</h3>
+            <p className="text-xs text-muted-foreground mb-5">Enter the admin password to continue</p>
             <input
               type="password"
               value={password}
@@ -209,7 +209,7 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
                       <Avatar avatarId={s.avatar_id} size={36} />
                       <div className="flex-1 min-w-0">
                         <div className="font-bold text-sm truncate">{s.student_name}</div>
-                        <div className="text-[11px] text-muted-foreground">{s.correct_count}/24 · {s.accuracy.toFixed(0)}% · 🔥 {s.best_streak}</div>
+                        <div className="text-[11px] text-muted-foreground">{s.correct_count}/{s.total_questions || 24} · {s.accuracy.toFixed(0)}% · 🔥 {s.best_streak}</div>
                       </div>
                       <div className="font-pixel text-sm text-accent">{s.score}</div>
                     </div>
