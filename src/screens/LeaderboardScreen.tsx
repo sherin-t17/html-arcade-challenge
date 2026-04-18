@@ -130,6 +130,106 @@ export const LeaderboardScreen = () => {
 const placeStyle = {
   1: {
     color: "text-primary",
+    bg: "from-primary/60 via-secondary/40 to-primary/10",
+    border: "border-primary",
+    height: "h-56 sm:h-72",
+    icon: Crown,
+    badge: "👑",
+    label: "CHAMPION",
+    glow: "shadow-[0_0_70px_hsl(var(--primary)/0.85),0_0_140px_hsl(var(--secondary)/0.5)]",
+  },
+  2: {
+    color: "text-accent",
+    bg: "from-accent/55 via-accent/25 to-accent/5",
+    border: "border-accent",
+    height: "h-44 sm:h-56",
+    icon: Medal,
+    badge: "🥈",
+    label: "RUNNER-UP",
+    glow: "shadow-[0_0_50px_hsl(var(--accent)/0.7)]",
+  },
+  3: {
+    color: "text-secondary",
+    bg: "from-secondary/55 via-secondary/25 to-secondary/5",
+    border: "border-secondary",
+    height: "h-36 sm:h-44",
+    icon: Trophy,
+    badge: "🥉",
+    label: "BRONZE",
+    glow: "shadow-[0_0_50px_hsl(var(--secondary)/0.7)]",
+  },
+} as const;
+
+const PodiumSlot = ({ row, place, delay, highlight }: { row?: Row; place: 1 | 2 | 3; delay: number; highlight: boolean }) => {
+  const cfg = placeStyle[place];
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const id = window.setTimeout(() => setVisible(true), delay);
+    return () => window.clearTimeout(id);
+  }, [delay]);
+  if (!row) return <div className="flex-1 max-w-[130px]" />;
+  const Icon = cfg.icon;
+  return (
+    <div className="relative flex-1 max-w-[140px] flex flex-col items-center">
+      {place === 1 && visible && (
+        <>
+          <Sparkles className="absolute -top-2 -left-3 h-5 w-5 text-secondary animate-flicker" />
+          <Sparkles className="absolute -top-4 right-2 h-4 w-4 text-accent animate-flicker" style={{ animationDelay: "0.6s" }} />
+          <Sparkles className="absolute top-8 -right-4 h-4 w-4 text-primary animate-flicker" style={{ animationDelay: "1.2s" }} />
+        </>
+      )}
+      <div className={cn("transition-all duration-700", visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+        <div className={cn("text-2xl mb-1 text-center", place === 1 && "animate-float-slow text-3xl")}>{cfg.badge}</div>
+        <div className={cn("relative", place === 1 && "animate-glow-pulse")}>
+          <Avatar
+            avatarId={row.avatar_id}
+            size={place === 1 ? 92 : 74}
+            glow={place === 1}
+            className={highlight ? "ring-2 ring-secondary ring-offset-2 ring-offset-background" : ""}
+          />
+        </div>
+        <div className="mt-2 text-center text-xs font-bold truncate max-w-[130px]">{row.student_name}</div>
+        <div className={cn("text-center font-display font-black text-lg mt-0.5", cfg.color)}>{row.score}</div>
+        <div className="text-center text-[10px] text-muted-foreground">{row.correct_count}/{row.total_questions || 24} · {row.accuracy.toFixed(0)}%</div>
+      </div>
+      <div
+        className={cn(
+          "w-full mt-3 rounded-t-2xl border-t-2 border-x-2 bg-gradient-to-b backdrop-blur relative overflow-hidden",
+          cfg.bg, cfg.border, cfg.height, cfg.glow,
+          visible ? "animate-podium-rise" : "opacity-0",
+        )}
+        style={{ animationDelay: `${delay}ms` }}
+      >
+        {/* Animated diagonal shimmer sweep */}
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+          style={{
+            animation: visible ? "shimmer 2.8s ease-in-out infinite" : "none",
+            animationDelay: `${delay + 400}ms`,
+            backgroundSize: "200% 100%",
+          }}
+        />
+        {/* Top inner shine */}
+        <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent pointer-events-none" />
+        {/* Vertical edge glow lines */}
+        <div className={cn("absolute inset-y-0 left-0 w-[2px] opacity-80", cfg.color, "bg-current")} />
+        <div className={cn("absolute inset-y-0 right-0 w-[2px] opacity-80", cfg.color, "bg-current")} />
+
+        <div className={cn("flex items-center justify-center pt-3 relative z-10", cfg.color)}>
+          <Icon className={cn("h-7 w-7 drop-shadow-[0_0_8px_currentColor]", place === 1 && "animate-float-slow")} />
+        </div>
+        <div className={cn("text-center font-display font-black mt-1 relative z-10 drop-shadow-[0_0_12px_currentColor]", cfg.color, place === 1 ? "text-5xl" : "text-4xl")}>
+          #{place}
+        </div>
+        <div className={cn("absolute bottom-2 left-0 right-0 text-center font-display font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.2em] z-10", cfg.color)}>
+          {cfg.label}
+        </div>
+      </div>
+    </div>
+  );
+};
+  1: {
+    color: "text-primary",
     bg: "from-primary/50 via-secondary/30 to-primary/10",
     border: "border-primary",
     height: "h-52 sm:h-64",
