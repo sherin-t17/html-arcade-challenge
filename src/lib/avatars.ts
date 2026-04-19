@@ -27,8 +27,9 @@ export const AVATAR_NAMES = [
 ];
 
 // Inset crop: how much of each cell's edge to trim (as fraction of cell size).
-// Increase to crop tighter (avoids neighbor bleed); decrease to show more of the sprite.
-const INSET = 0.12;
+// The sprite has thin white gutters between cells; a small inset removes them
+// without cropping the character. Keep this LOW so faces aren't cut off.
+const INSET = 0.04;
 
 export function getAvatarStyle(avatarId: number): React.CSSProperties {
   const cellIndex = SELECTED_CELLS[avatarId % AVATAR_COUNT] ?? 0;

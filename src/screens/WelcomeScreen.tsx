@@ -28,6 +28,17 @@ export const WelcomeScreen = () => {
       <div className="floating-orb w-96 h-96 bg-secondary/30 top-40 -right-32" style={{ animationDelay: "2s" }} />
       <div className="floating-orb w-64 h-64 bg-accent/30 bottom-20 left-1/4" style={{ animationDelay: "4s" }} />
 
+      {/* Decorative sparkles */}
+      <div className="pointer-events-none absolute top-20 left-8 text-accent/60 animate-float-slow hidden sm:block">
+        <Sparkles className="h-6 w-6" />
+      </div>
+      <div className="pointer-events-none absolute top-40 right-10 text-secondary/70 animate-float-slow hidden sm:block" style={{ animationDelay: "1.5s" }}>
+        <Zap className="h-7 w-7" />
+      </div>
+      <div className="pointer-events-none absolute bottom-32 left-12 text-primary/60 animate-float-slow hidden sm:block" style={{ animationDelay: "3s" }}>
+        <Rocket className="h-6 w-6" />
+      </div>
+
       <div className="absolute top-4 right-4 z-20"><SoundToggle /></div>
 
       {/* Title */}
@@ -35,15 +46,24 @@ export const WelcomeScreen = () => {
         <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-secondary/40 bg-secondary/10 backdrop-blur text-secondary text-xs font-display font-bold uppercase tracking-widest animate-bounce-in">
           <Sparkles className="h-3.5 w-3.5" /> Quiz Battle Arena
         </div>
-        <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl leading-none tracking-tight">
+        <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl leading-none tracking-tight relative">
           <span className="block text-gradient animate-gradient-shift" style={{ backgroundImage: "linear-gradient(135deg, hsl(190 100% 70%), hsl(275 100% 75%), hsl(325 100% 75%))" }}>
             HTML
           </span>
           <span className="block text-gradient-pink mt-1 animate-flicker">ARCADE</span>
+          {/* Glow ring behind title */}
+          <div className="pointer-events-none absolute inset-0 -z-10 blur-3xl opacity-50 bg-gradient-to-r from-primary/40 via-secondary/40 to-accent/40 rounded-full" />
         </h1>
         <p className="mt-4 text-base sm:text-lg text-foreground/80 font-medium">
           Conquer <span className="text-accent font-bold">HTML</span> &amp; <span className="text-secondary font-bold">CSS</span> — Earn your legend
         </p>
+
+        {/* Stat chips */}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+          <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-[10px] font-display font-bold uppercase tracking-widest text-primary">24 Questions</span>
+          <span className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/30 text-[10px] font-display font-bold uppercase tracking-widest text-secondary">8 Levels</span>
+          <span className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-[10px] font-display font-bold uppercase tracking-widest text-accent">Live Podium</span>
+        </div>
       </div>
 
       {/* Card */}
@@ -100,8 +120,8 @@ export const WelcomeScreen = () => {
         )}
       </div>
 
-      <p className="mt-6 text-xs font-display font-bold text-muted-foreground/70 text-center max-w-md uppercase tracking-widest relative z-10">
-        24 Questions · 8 Levels · Live Leaderboard
+      <p className="mt-6 mb-4 text-[10px] font-display font-bold text-muted-foreground/60 text-center uppercase tracking-widest relative z-10">
+        ⚡ Powered by HTML Arcade · Compete · Conquer · Become Legend ⚡
       </p>
     </div>
   );
