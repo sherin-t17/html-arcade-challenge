@@ -45,11 +45,10 @@ export const AVATAR_IMAGES = [
 export const AVATAR_COUNT = AVATAR_IMAGES.length;
 
 export const AVATAR_NAMES = [
-  "Sakura", "Kai", "Yuki", "Ren", "Hikari",
-  "Luna", "Shin", "Haru", "Mei", "Akari",
-  "Hana", "Sora", "Aoi", "Daichi",
-  "Mira", "Riku", "Nova",
-  "Bubbles", "Blaze", "Magi",
+  "Kai", "Yuki", "Ren", "Hikari", "Luna",
+  "Shin", "Haru", "Mei", "Akari", "Hana",
+  "Aoi", "Daichi", "Mira", "Riku", "Nova",
+  "Sora", "Blaze", "Echo", "Rin", "Magi",
 ];
 
 export function getAvatarStyle(avatarId: number): React.CSSProperties {
