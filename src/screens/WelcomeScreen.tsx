@@ -120,9 +120,6 @@ export const WelcomeScreen = () => {
         )}
       </div>
 
-      <p className="mt-6 mb-4 text-[10px] font-display font-bold text-muted-foreground/60 text-center uppercase tracking-widest relative z-10">
-        ⚡ Powered by HTML Arcade · Compete · Conquer · Become Legend ⚡
-      </p>
     </div>
   );
 };
