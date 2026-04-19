@@ -251,8 +251,17 @@ export const TeacherDashboard = ({ open, onClose }: Props) => {
                     </label>
                     <input
                       type="number" min={1} max={500}
-                      value={expectedDraft}
-                      onChange={(e) => setExpectedDraft(Math.max(1, parseInt(e.target.value) || 1))}
+                      value={Number.isFinite(expectedDraft) ? expectedDraft : ""}
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        if (raw === "") { setExpectedDraft(NaN as unknown as number); return; }
+                        const n = parseInt(raw, 10);
+                        if (!Number.isNaN(n)) setExpectedDraft(n);
+                      }}
+                      onBlur={() => {
+                        if (!Number.isFinite(expectedDraft) || expectedDraft < 1) setExpectedDraft(1);
+                        else if (expectedDraft > 500) setExpectedDraft(500);
+                      }}
                       className="w-full h-12 rounded-lg bg-input border-2 border-primary/30 focus:border-primary focus:outline-none px-4"
                     />
                     <p className="mt-1 text-xs text-muted-foreground">
