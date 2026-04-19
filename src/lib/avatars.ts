@@ -1,51 +1,57 @@
-// Anime avatar sprite sheet helper — 5 columns × 6 rows = 30 cells.
-// Each cell is exactly 1/5 wide × 1/6 tall, characters centered with no gutter.
-import spriteUrl from "@/assets/avatars-sprite.png";
+import avatar0 from "@/assets/avatars/avatar-0.png";
+import avatar1 from "@/assets/avatars/avatar-1.png";
+import avatar2 from "@/assets/avatars/avatar-2.png";
+import avatar3 from "@/assets/avatars/avatar-3.png";
+import avatar4 from "@/assets/avatars/avatar-4.png";
+import avatar5 from "@/assets/avatars/avatar-5.png";
+import avatar6 from "@/assets/avatars/avatar-6.png";
+import avatar7 from "@/assets/avatars/avatar-7.png";
+import avatar8 from "@/assets/avatars/avatar-8.png";
+import avatar9 from "@/assets/avatars/avatar-9.png";
+import avatar10 from "@/assets/avatars/avatar-10.png";
+import avatar11 from "@/assets/avatars/avatar-11.png";
+import avatar12 from "@/assets/avatars/avatar-12.png";
+import avatar13 from "@/assets/avatars/avatar-13.png";
+import avatar14 from "@/assets/avatars/avatar-14.png";
+import avatar15 from "@/assets/avatars/avatar-15.png";
+import avatar16 from "@/assets/avatars/avatar-16.png";
+import avatar17 from "@/assets/avatars/avatar-17.png";
+import avatar18 from "@/assets/avatars/avatar-18.png";
+import avatar19 from "@/assets/avatars/avatar-19.png";
 
-export const AVATAR_SPRITE_URL = spriteUrl;
-export const SHEET_COLS = 5;
-export const SHEET_ROWS = 6;
-export const AVATAR_COUNT = 20;
+export const AVATAR_IMAGES = [
+  avatar0,
+  avatar1,
+  avatar2,
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6,
+  avatar7,
+  avatar8,
+  avatar9,
+  avatar10,
+  avatar11,
+  avatar12,
+  avatar13,
+  avatar14,
+  avatar15,
+  avatar16,
+  avatar17,
+  avatar18,
+  avatar19,
+] as const;
 
-// Pick 20 best cells (skip a few duplicates / similar looks).
-const SELECTED_CELLS = [
-  0, 1, 2, 3, 4,
-  5, 6, 7, 8, 9,
-  10, 12, 13, 14,
-  15, 17, 18,
-  20, 27, 29,
-];
-
-while (SELECTED_CELLS.length < AVATAR_COUNT) SELECTED_CELLS.push(0);
+export const AVATAR_COUNT = AVATAR_IMAGES.length;
 
 export const AVATAR_NAMES = [
-  "Sakura", "Kai", "Yuki", "Ren", "Hikari",
-  "Luna", "Shin", "Haru", "Mei", "Akari",
-  "Hana", "Sora", "Aoi", "Daichi",
-  "Mira", "Riku", "Nova",
-  "Bubbles", "Blaze", "Magi",
+  "Kai", "Yuki", "Ren", "Hikari", "Luna",
+  "Shin", "Haru", "Mei", "Akari", "Hana",
+  "Aoi", "Daichi", "Mira", "Riku", "Nova",
+  "Sora", "Blaze", "Echo", "Rin", "Magi",
 ];
 
-export function getAvatarStyle(avatarId: number): React.CSSProperties {
-  const cellIndex = SELECTED_CELLS[avatarId % AVATAR_COUNT] ?? 0;
-  const col = cellIndex % SHEET_COLS;
-  const row = Math.floor(cellIndex / SHEET_COLS);
-
-  // Show exactly one cell. Background scaled so full sheet = COLS × box-size.
-  const bgWidthPct = SHEET_COLS * 100;
-  const bgHeightPct = SHEET_ROWS * 100;
-
-  // Position so the chosen cell aligns with the box.
-  // 0% = leftmost cell, 100% = rightmost cell.
-  const xPct = (col / (SHEET_COLS - 1)) * 100;
-  const yPct = (row / (SHEET_ROWS - 1)) * 100;
-
-  return {
-    backgroundImage: `url(${spriteUrl})`,
-    backgroundSize: `${bgWidthPct}% ${bgHeightPct}%`,
-    backgroundPosition: `${xPct}% ${yPct}%`,
-    backgroundRepeat: "no-repeat",
-    imageRendering: "auto",
-    overflow: "hidden",
-  };
+export function getAvatarImage(avatarId: number) {
+  return AVATAR_IMAGES[((avatarId % AVATAR_COUNT) + AVATAR_COUNT) % AVATAR_COUNT] ?? avatar0;
 }
+
