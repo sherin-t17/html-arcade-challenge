@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useQuiz } from "@/state/quiz-store";
 import { Avatar } from "@/components/Avatar";
 import { supabase } from "@/integrations/supabase/client";
-import { Trophy, Target, Flame, Zap, Lock, Loader2, RotateCcw } from "lucide-react";
+import { Trophy, Target, Flame, Zap, Lock, Loader2, RotateCcw, Home } from "lucide-react";
 import { sounds } from "@/lib/sounds";
 
 export const ResultsScreen = () => {
   const {
-    studentName, avatarId, lastScore, lastCorrect, lastAccuracy, lastBestStreak, lastTitle, setScreen, replayQuiz,
+    studentName, avatarId, lastScore, lastCorrect, lastAccuracy, lastBestStreak, lastTitle, setScreen, replayQuiz, reset,
   } = useQuiz();
 
   const [submittedCount, setSubmittedCount] = useState(0);
@@ -104,7 +104,15 @@ export const ResultsScreen = () => {
             </div>
           )}
 
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => { sounds.click(); reset(); }}
+              className="h-12 rounded-2xl btn-ghost-neon text-xs inline-flex items-center justify-center gap-1.5"
+              aria-label="Back to home"
+            >
+              <Home className="h-3.5 w-3.5" /> Home
+            </button>
             <button
               type="button"
               onClick={() => { sounds.start(); replayQuiz(); }}
