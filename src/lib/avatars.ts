@@ -51,13 +51,7 @@ export const AVATAR_NAMES = [
   "Sora", "Blaze", "Echo", "Rin", "Magi",
 ];
 
-export function getAvatarStyle(avatarId: number): React.CSSProperties {
-  const image = AVATAR_IMAGES[((avatarId % AVATAR_COUNT) + AVATAR_COUNT) % AVATAR_COUNT] ?? avatar0;
-
-  return {
-    backgroundImage: `url(${image})`,
-    backgroundSize: "contain",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
+export function getAvatarImage(avatarId: number) {
+  return AVATAR_IMAGES[((avatarId % AVATAR_COUNT) + AVATAR_COUNT) % AVATAR_COUNT] ?? avatar0;
 }
+
