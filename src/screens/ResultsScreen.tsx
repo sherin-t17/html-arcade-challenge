@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useQuiz } from "@/state/quiz-store";
 import { Avatar } from "@/components/Avatar";
 import { supabase } from "@/integrations/supabase/client";
-import { Trophy, Target, Flame, Zap, Lock, Loader2, RotateCcw } from "lucide-react";
+import { Trophy, Target, Flame, Zap, Lock, Loader2, RotateCcw, Home } from "lucide-react";
 import { sounds } from "@/lib/sounds";
 
 export const ResultsScreen = () => {
   const {
-    studentName, avatarId, lastScore, lastCorrect, lastAccuracy, lastBestStreak, lastTitle, setScreen, replayQuiz,
+    studentName, avatarId, lastScore, lastCorrect, lastAccuracy, lastBestStreak, lastTitle, setScreen, replayQuiz, reset,
   } = useQuiz();
 
   const [submittedCount, setSubmittedCount] = useState(0);
