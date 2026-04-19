@@ -104,7 +104,15 @@ export const ResultsScreen = () => {
             </div>
           )}
 
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => { sounds.click(); reset(); }}
+              className="h-12 rounded-2xl btn-ghost-neon text-xs inline-flex items-center justify-center gap-1.5"
+              aria-label="Back to home"
+            >
+              <Home className="h-3.5 w-3.5" /> Home
+            </button>
             <button
               type="button"
               onClick={() => { sounds.start(); replayQuiz(); }}
