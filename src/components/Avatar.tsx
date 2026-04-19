@@ -15,6 +15,7 @@ export const Avatar = ({ avatarId, size = 64, className, glow = false, selected 
       role="img"
       aria-label={AVATAR_NAMES[avatarId] ?? `Avatar ${avatarId}`}
       style={{ ...getAvatarStyle(avatarId), width: size, height: size, backgroundColor: "#ffffff" }}
+      data-avatar-id={avatarId}
       className={cn(
         "rounded-2xl border-2 transition-all duration-300 overflow-hidden",
         selected
