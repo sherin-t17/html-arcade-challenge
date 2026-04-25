@@ -245,7 +245,7 @@ export const QuizScreen = () => {
             <Sparkles className="h-3 w-3" /> Lvl {q.level} · {q.levelName}
           </span>
         </div>
-        <h2 className="text-lg sm:text-2xl font-bold leading-snug font-display">{q.question}</h2>
+        <h2 className="text-lg sm:text-2xl font-bold leading-snug font-body tracking-tight">{q.question}</h2>
         {q.code && (
           <pre className="mt-4 p-4 rounded-xl bg-background/80 border border-accent/30 font-mono text-xs sm:text-sm overflow-x-auto text-accent whitespace-pre-wrap break-words shadow-inner">
             <code>{q.code}</code>
