@@ -48,14 +48,14 @@ export const WelcomeScreen = () => {
         </div>
         <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl leading-none tracking-tight relative">
           <span className="block text-gradient animate-gradient-shift" style={{ backgroundImage: "linear-gradient(135deg, hsl(190 100% 70%), hsl(275 100% 75%), hsl(325 100% 75%))" }}>
-            HTML
+            FEEE
           </span>
           <span className="block text-gradient-pink mt-1 animate-flicker">ARCADE</span>
           {/* Glow ring behind title */}
           <div className="pointer-events-none absolute inset-0 -z-10 blur-3xl opacity-50 bg-gradient-to-r from-primary/40 via-secondary/40 to-accent/40 rounded-full" />
         </h1>
         <p className="mt-4 text-base sm:text-lg text-foreground/80 font-medium">
-          Conquer <span className="text-accent font-bold">HTML</span> &amp; <span className="text-secondary font-bold">CSS</span> — Earn your legend
+          Conquer <span className="text-accent font-bold">Communication</span> &amp; <span className="text-secondary font-bold">Modulation</span> — Earn your legend
         </p>
 
         {/* Stat chips */}
