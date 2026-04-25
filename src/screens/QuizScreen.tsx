@@ -5,7 +5,7 @@ import { hashString, mulberry32, seededShuffle } from "@/lib/seeded-random";
 import { sounds } from "@/lib/sounds";
 import { SoundToggle } from "@/components/SoundToggle";
 import { supabase } from "@/integrations/supabase/client";
-import { Flame, Trophy, ChevronRight, Sparkles } from "lucide-react";
+import { Flame, Trophy, ChevronRight, Sparkles, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const QUESTION_SECONDS = 20;
@@ -182,6 +182,13 @@ export const QuizScreen = () => {
     setScreen("results");
   }, [submitting, correctCount, questions.length, score, bestStreak, studentName, avatarId, setLastSession, setScreen]);
 
+  const handleGoHome = () => {
+    if (advanceTimerRef.current) window.clearTimeout(advanceTimerRef.current);
+    if (confirm("Quit the quiz and return to the home screen? Your progress will be lost.")) {
+      setScreen("welcome");
+    }
+  };
+
   const ringPct = (secondsLeft / QUESTION_SECONDS) * 100;
   const danger = secondsLeft <= 5;
   const ringColor = danger ? "hsl(var(--destructive))" : "hsl(var(--accent))";
@@ -208,6 +215,15 @@ export const QuizScreen = () => {
           <Flame className={cn("h-3.5 w-3.5", streak >= 3 ? "text-secondary animate-glow-pulse" : "text-muted-foreground")} />
           <span className={streak >= 3 ? "text-secondary" : "text-muted-foreground"}>×{streak}</span>
         </div>
+        <button
+          type="button"
+          onClick={handleGoHome}
+          aria-label="Return to home"
+          title="Home"
+          className="h-9 w-9 rounded-full arcade-card inline-flex items-center justify-center text-primary hover:text-primary hover:scale-110 hover:shadow-[0_0_20px_hsl(var(--primary)/0.5)] transition-all"
+        >
+          <Home className="h-4 w-4" />
+        </button>
         <SoundToggle />
       </div>
 
