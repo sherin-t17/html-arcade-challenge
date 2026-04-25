@@ -35,11 +35,11 @@ function streakMultiplier(streak: number): number {
 }
 
 function rankTitle(pct: number): string {
-  if (pct <= 30) return "HTML Rookie 🌱";
-  if (pct <= 50) return "Tag Learner 📖";
-  if (pct <= 70) return "Code Explorer 🔍";
-  if (pct <= 85) return "Web Warrior ⚔️";
-  return "HTML Legend 🏆";
+  if (pct <= 30) return "Signal Rookie 🌱";
+  if (pct <= 50) return "Wave Learner 📖";
+  if (pct <= 70) return "Channel Explorer 🔍";
+  if (pct <= 85) return "Comm Warrior ⚔️";
+  return "FEEE Legend 🏆";
 }
 
 export const QuizScreen = () => {
