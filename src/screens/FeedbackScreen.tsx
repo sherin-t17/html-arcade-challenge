@@ -18,7 +18,7 @@ type FormState = {
 const STEPS = [
   { key: "rating", title: "How was your overall experience?" },
   { key: "difficulty", title: "How would you rate the difficulty?", options: ["Too Easy", "Just Right", "Hard", "Too Hard"] },
-  { key: "helpful", title: "Did this quiz help you learn HTML better?", options: ["Yes, a lot", "Somewhat", "Not really"] },
+  { key: "helpful", title: "Did this quiz help you learn FEEE Communication Engineering better?", options: ["Yes, a lot", "Somewhat", "Not really"] },
   { key: "design", title: "How did you like the design & animations?", options: ["Loved it", "Good", "Average", "Needs work"] },
   { key: "liked_most", title: "What did you enjoy most?", options: ["Quiz questions", "Design / UI", "Leaderboard", "Avatars", "Everything"] },
   { key: "problems", title: "Did you face any problems?", options: ["No issues", "Confusing questions", "UI / display issues", "Slow / laggy"] },
@@ -80,7 +80,7 @@ export const FeedbackScreen = () => {
         <div className="arcade-card max-w-md w-full p-8 text-center animate-bounce-in relative z-10">
           <CheckCircle2 className="h-20 w-20 text-success mx-auto mb-4 animate-glow-pulse" />
           <h2 className="font-display font-black text-2xl text-gradient mb-2">THANK YOU!</h2>
-          <p className="text-sm text-muted-foreground mb-6">Your feedback helps make HTML Arcade legendary.</p>
+          <p className="text-sm text-muted-foreground mb-6">Your feedback helps make FEEE Arcade legendary.</p>
           <button onClick={() => setScreen("results")} className="w-full h-13 py-3 rounded-2xl btn-neon">
             BACK TO RESULTS
           </button>
