@@ -19,21 +19,21 @@ const Index = () => {
 
   // SEO basics
   useEffect(() => {
-    document.title = "HTML Arcade — Retro HTML & CSS Quiz";
+    document.title = "FEEE Arcade — Retro Communication Engineering Quiz";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement("meta");
       meta.setAttribute("name", "description");
       document.head.appendChild(meta);
     }
-    meta.setAttribute("content", "A retro pixel-art HTML & CSS quiz arena with live leaderboard. 24 questions across 8 levels.");
+    meta.setAttribute("content", "A retro pixel-art FEEE Communication Engineering quiz arena with live leaderboard. 24 questions across 8 levels.");
   }, []);
 
   return (
     <main className="relative min-h-dvh pixel-grid">
       <Starfield />
 
-      <h1 className="sr-only">HTML Arcade — Retro HTML &amp; CSS Quiz</h1>
+      <h1 className="sr-only">FEEE Arcade — Retro Communication Engineering Quiz</h1>
 
       {screen === "welcome" && <WelcomeScreen />}
       {screen === "quiz" && <QuizScreen />}
